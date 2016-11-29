@@ -1,0 +1,75 @@
+package ${o.pkg};
+
+import com.kaffa.latte.commons.bean.model.BaseBean;
+#foreach($importStr in $o.importList)
+import ${importStr};
+#end
+
+public class ${o.name} extends BaseBean {
+
+    /**
+     * 序列号
+     */
+    private static final long serialVersionUID = 1L;
+
+#foreach($field in $o.fieldList)
+    /**
+     * ${field.comment}
+     */
+    private ${field.type} ${field.name};
+
+#end
+#foreach($field in $o.fieldList)
+    /**
+     * @return the ${field.name}
+     */
+    public ${field.type} ${field.readName}() {
+        return ${field.name};
+    }
+
+    /**
+     * @param ${field.name}
+     *            the ${field.name} to set
+     */
+    public void ${field.writeName}(${field.type} ${field.name}) {
+        this.${field.name} = ${field.name};
+    }
+
+#end
+
+#foreach($subClass in $o.subClassList)
+ public static class ${subClass.name} extends BaseBean {
+
+    /**
+     * 序列号
+     */
+    private static final long serialVersionUID = 1L;
+
+#foreach($field in $o.fieldList)
+    /**
+     * ${field.comment}
+     */
+    private ${field.type} ${field.name};
+
+#end
+#foreach($field in $o.fieldList)
+    /**
+     * @return the ${field.name}
+     */
+    public ${field.type} ${field.readName}() {
+        return ${field.name};
+    }
+
+    /**
+     * @param ${field.name}
+     *            the ${field.name} to set
+     */
+    public void ${field.writeName}(${field.type} ${field.name}) {
+        this.${field.name} = ${field.name};
+    }
+
+#end
+ }
+
+#end
+}

@@ -1,0 +1,24 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans   
+        classpath:/org/springframework/beans/factory/xml/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context 
+        classpath:/org/springframework/context/config/spring-context-3.0.xsd
+        http://www.springframework.org/schema/mvc
+        classpath:/org/springframework/web/servlet/config/spring-mvc-3.0.xsd">
+
+    <bean id="systemProperties" class="com.kaffatech.latte.ctx.base.SystemProperties"
+          init-method="init">
+        <property name="locations">
+            <list>
+                <value>classpath:properties/env_devtest.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- include -->
+    <import resource="db/db.xml"/>
+
+</beans>
