@@ -1,0 +1,15 @@
+*.DS_Store
+
+/*/bin/
+/*/target/
+/*/build/
+bin/
+target/
+build/
+logs/
+
+/*/logs/
+.idea/
+/*/.idea/
+/*/*.iml
+*.iml
