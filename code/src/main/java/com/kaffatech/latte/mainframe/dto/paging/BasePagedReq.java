@@ -21,11 +21,6 @@ public class BasePagedReq extends Request {
 	private Integer draw;
 
 	/**
-	 * 搜索项(不必填)
-	 */
-	private String keyword;
-
-	/**
 	 * 过滤项(不必填)
 	 */
 	private String filter;
@@ -56,14 +51,6 @@ public class BasePagedReq extends Request {
 
 	public void setDraw(Integer draw) {
 		this.draw = draw;
-	}
-
-	public String getKeyword() {
-		return keyword;
-	}
-
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
 	}
 
 	public String getFilter() {
