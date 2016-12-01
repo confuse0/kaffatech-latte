@@ -12,7 +12,7 @@ import com.kaffatech.latte.commons.bean.model.BaseBean;
 public class BasePagedRes<T> extends BaseBean {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -30,6 +30,26 @@ public class BasePagedRes<T> extends BaseBean {
 	 * 过滤数(不必填)
 	 */
 	private Integer recordFiltered;
+
+	/**
+	 * 上一页
+	 */
+	private Integer prevPageNo;
+
+	/**
+	 * 下一页
+	 */
+	private Integer nextPageNo;
+
+	/**
+	 * 最大页
+	 */
+	private Integer maxPageNo;
+
+	/**
+	 * 页号List
+	 */
+	private List<Integer> pageNoList;
 
 	/**
 	 * 数据
@@ -58,6 +78,38 @@ public class BasePagedRes<T> extends BaseBean {
 
 	public void setRecordFiltered(Integer recordFiltered) {
 		this.recordFiltered = recordFiltered;
+	}
+
+	public Integer getPrevPageNo() {
+		return prevPageNo;
+	}
+
+	public void setPrevPageNo(Integer prevPageNo) {
+		this.prevPageNo = prevPageNo;
+	}
+
+	public Integer getNextPageNo() {
+		return nextPageNo;
+	}
+
+	public void setNextPageNo(Integer nextPageNo) {
+		this.nextPageNo = nextPageNo;
+	}
+
+	public Integer getMaxPageNo() {
+		return maxPageNo;
+	}
+
+	public void setMaxPageNo(Integer maxPageNo) {
+		this.maxPageNo = maxPageNo;
+	}
+
+	public List<Integer> getPageNoList() {
+		return pageNoList;
+	}
+
+	public void setPageNoList(List<Integer> pageNoList) {
+		this.pageNoList = pageNoList;
 	}
 
 	public List<T> getList() {
