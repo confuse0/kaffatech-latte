@@ -1,19 +1,23 @@
 
-package com.kaffatech.latte.commons.bean.model.paging;
+package com.kaffatech.latte.mainframe.dto.paging;
 
 import com.kaffatech.latte.commons.bean.model.BaseBean;
-import com.kaffatech.latte.commons.toolkit.base.PagingUtils;
 
 /**
  * @author zhen.ling
  *
  */
-public class PagedParameter extends BaseBean {
+public class PagedReq extends BaseBean {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 标识
+	 */
+	private Integer draw;
 
 	/**
 	 * 页号
@@ -33,7 +37,15 @@ public class PagedParameter extends BaseBean {
 	/**
 	 * 排序规则
 	 */
-	private Order order;
+	private String order;
+
+	public Integer getDraw() {
+		return draw;
+	}
+
+	public void setDraw(Integer draw) {
+		this.draw = draw;
+	}
 
 	public Integer getPage() {
 		return page;
@@ -59,11 +71,11 @@ public class PagedParameter extends BaseBean {
 		this.sort = sort;
 	}
 
-	public Order getOrder() {
+	public String getOrder() {
 		return order;
 	}
 
-	public void setOrder(Order order) {
+	public void setOrder(String order) {
 		this.order = order;
 	}
 }

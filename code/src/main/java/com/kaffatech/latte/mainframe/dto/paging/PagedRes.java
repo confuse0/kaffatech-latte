@@ -9,7 +9,7 @@ import com.kaffatech.latte.commons.bean.model.BaseBean;
  * @author zhen.ling
  *
  */
-public class BasePagedRes<T> extends BaseBean {
+public class PagedRes<T> extends BaseBean {
 
 	/**
 	 *
@@ -17,27 +17,27 @@ public class BasePagedRes<T> extends BaseBean {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 标识(不必填)
+	 * 标识
 	 */
 	private Integer draw;
 
 	/**
-	 * 总数
+	 * 总行数
 	 */
-	private Integer recordTotal;
+	private Integer total;
 
 	/**
-	 * 过滤数(不必填)
+	 * 列表数据
 	 */
-	private Integer recordFiltered;
+	private List<T> rows;
 
 	/**
-	 * 上一页
+	 * 上页号
 	 */
 	private Integer prevPageNo;
 
 	/**
-	 * 下一页
+	 * 下页号
 	 */
 	private Integer nextPageNo;
 
@@ -47,14 +47,9 @@ public class BasePagedRes<T> extends BaseBean {
 	private Integer maxPageNo;
 
 	/**
-	 * 页号List
+	 * 页号列表
 	 */
 	private List<Integer> pageNoList;
-
-	/**
-	 * 数据
-	 */
-	private List<T> list;
 
 	public Integer getDraw() {
 		return draw;
@@ -64,20 +59,20 @@ public class BasePagedRes<T> extends BaseBean {
 		this.draw = draw;
 	}
 
-	public Integer getRecordTotal() {
-		return recordTotal;
+	public Integer getTotal() {
+		return total;
 	}
 
-	public void setRecordTotal(Integer recordTotal) {
-		this.recordTotal = recordTotal;
+	public void setTotal(Integer total) {
+		this.total = total;
 	}
 
-	public Integer getRecordFiltered() {
-		return recordFiltered;
+	public List<T> getRows() {
+		return rows;
 	}
 
-	public void setRecordFiltered(Integer recordFiltered) {
-		this.recordFiltered = recordFiltered;
+	public void setRows(List<T> rows) {
+		this.rows = rows;
 	}
 
 	public Integer getPrevPageNo() {
@@ -110,13 +105,5 @@ public class BasePagedRes<T> extends BaseBean {
 
 	public void setPageNoList(List<Integer> pageNoList) {
 		this.pageNoList = pageNoList;
-	}
-
-	public List<T> getList() {
-		return list;
-	}
-
-	public void setList(List<T> list) {
-		this.list = list;
 	}
 }
