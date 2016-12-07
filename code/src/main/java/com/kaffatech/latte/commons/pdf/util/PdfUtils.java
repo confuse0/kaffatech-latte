@@ -37,7 +37,10 @@ public class PdfUtils {
             PdfStamper ps = new PdfStamper(reader, bos);
             try {
                 AcroFields fields = ps.getAcroFields();
-                fillData(fields, data);
+                for (String key : data.keySet()) {
+                    String value = data.get(key);
+                    fields.setField(key, value);
+                }
                 ps.setFormFlattening(true);
             } finally {
                 ps.close();
@@ -49,23 +52,6 @@ public class PdfUtils {
                 fos.write(bos.toByteArray());
             } finally {
                 fos.close();
-            }
-        } catch (Exception e) {
-            throw new IoRuntimeException(e);
-        }
-    }
-
-    /**
-     * 填充数据
-     *
-     * @param fields
-     * @param data
-     */
-    private static void fillData(AcroFields fields, Map<String, String> data) {
-        try {
-            for (String key : data.keySet()) {
-                String value = data.get(key);
-                fields.setField(key, value);
             }
         } catch (Exception e) {
             throw new IoRuntimeException(e);
