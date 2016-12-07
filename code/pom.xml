@@ -42,6 +42,10 @@
         <mockito.version>1.10.19</mockito.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
         <bval.version>1.1.1</bval.version>
+        <itextpdf.version>5.5.10</itextpdf.version>
+        <itextpdf.asian.version>5.2.0</itextpdf.asian.version>
+
+
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -294,6 +298,18 @@
             <version>${poi.version}</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>${itextpaf.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/itext-asian -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-asian</artifactId>
+            <version>${itextpdf.asian.version}</version>
+        </dependency>
     </dependencies>
     <build>
 
