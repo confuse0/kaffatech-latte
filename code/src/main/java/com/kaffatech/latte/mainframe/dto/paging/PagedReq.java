@@ -25,6 +25,11 @@ public class PagedReq extends BaseBean {
 	private Integer page;
 
 	/**
+	 * 起始行号
+	 */
+	private Integer start;
+
+	/**
 	 * 单页行数
 	 */
 	private Integer rows;
@@ -53,6 +58,14 @@ public class PagedReq extends BaseBean {
 
 	public void setPage(Integer page) {
 		this.page = page;
+	}
+
+	public Integer getStart() {
+		return start;
+	}
+
+	public void setStart(Integer start) {
+		this.start = start;
 	}
 
 	public Integer getRows() {
