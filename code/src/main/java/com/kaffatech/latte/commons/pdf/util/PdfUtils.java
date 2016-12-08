@@ -4,6 +4,7 @@ import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.kaffatech.latte.commons.io.model.exception.IoRuntimeException;
+import com.kaffatech.latte.commons.io.util.FileUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -20,12 +21,11 @@ public class PdfUtils {
      *
      * @param templatePath
      * @param data
-     * @param folderPath
      * @param filePath
      */
-    public static void createPdf(String templatePath, Map<String, String> data, String folderPath, String filePath) {
+    public static void createPdf(String templatePath, Map<String, String> data, String filePath) {
         try {
-            File file = new File(folderPath);
+            File file = new File(FileUtils.getFolder(filePath));
             // 如果文件夹不存在则创建
             if (!file.exists() && !file.isDirectory()) {
                 file.mkdir();

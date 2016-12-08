@@ -15,6 +15,8 @@ public abstract class StringUtils extends org.apache.commons.lang3.StringUtils {
 
 	public static final String LINE_SEP = System.getProperty("line.separator");
 
+	public static final String FILE_SEP = System.getProperty("file.separator");
+
 	public static final String HTML_LINE_SEP = "<br/>";
 
 	public static String upperFc(String str) {
