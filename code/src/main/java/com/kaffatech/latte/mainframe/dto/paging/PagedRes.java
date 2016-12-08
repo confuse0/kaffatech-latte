@@ -4,12 +4,13 @@ package com.kaffatech.latte.mainframe.dto.paging;
 import java.util.List;
 
 import com.kaffatech.latte.commons.bean.model.BaseBean;
+import com.kaffatech.latte.mainframe.dto.Response;
 
 /**
  * @author zhen.ling
  *
  */
-public class PagedRes<T> extends BaseBean {
+public class PagedRes<T> extends Response {
 
 	/**
 	 *
