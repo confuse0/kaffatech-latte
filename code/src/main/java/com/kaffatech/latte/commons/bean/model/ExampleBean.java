@@ -15,13 +15,13 @@ public class ExampleBean extends BaseBean {
 	/**
 	 * OrderBy子句
 	 */
-	private Long orderByClause;
+	private String orderByClause;
 
-	public Long getOrderByClause() {
+	public String getOrderByClause() {
 		return orderByClause;
 	}
 
-	public void setOrderByClause(Long orderByClause) {
+	public void setOrderByClause(String orderByClause) {
 		this.orderByClause = orderByClause;
 	}
 }
