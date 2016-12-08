@@ -17,7 +17,7 @@ import java.util.Properties;
 /**
  * @author lingzhen on 16/12/8.
  */
-public class PageInterceptor implements Interceptor {
+public class DialectInterceptor implements Interceptor {
 
     /**
      * 数据库方言
@@ -26,7 +26,7 @@ public class PageInterceptor implements Interceptor {
 
     public Object intercept(Invocation invocation) throws Throwable {
         //当前环境 MappedStatement，BoundSql，及sql取得
-        MappedStatement mappedStatement=(MappedStatement)invocation.getArgs()[0];
+        MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
         Object parameter = invocation.getArgs()[1];
         BoundSql boundSql = mappedStatement.getBoundSql(parameter);
         String origSql = boundSql.getSql().trim();
@@ -40,7 +40,7 @@ public class PageInterceptor implements Interceptor {
             // 替换分页参数
             BoundSql pagedBoundSql = copyFromBoundSql(mappedStatement, boundSql, pagedSql);
             MappedStatement pagedMs = copyFromMappedStatement(mappedStatement, new BoundSqlSqlSource(pagedBoundSql));
-            invocation.getArgs()[0]= pagedMs;
+            invocation.getArgs()[0] = pagedMs;
         }
 
         return invocation.proceed();
@@ -49,15 +49,15 @@ public class PageInterceptor implements Interceptor {
     /**
      * 复制MappedStatement对象
      */
-    private MappedStatement copyFromMappedStatement(MappedStatement ms,SqlSource newSqlSource) {
-        Builder builder = new Builder(ms.getConfiguration(),ms.getId(),newSqlSource,ms.getSqlCommandType());
+    private MappedStatement copyFromMappedStatement(MappedStatement ms, SqlSource newSqlSource) {
+        Builder builder = new Builder(ms.getConfiguration(), ms.getId(), newSqlSource, ms.getSqlCommandType());
 
         builder.resource(ms.getResource());
         builder.fetchSize(ms.getFetchSize());
         builder.statementType(ms.getStatementType());
         builder.keyGenerator(ms.getKeyGenerator());
-        if(null !=ms.getKeyProperties()){
-            if(ms.getKeyProperties().length>0){
+        if (null != ms.getKeyProperties()) {
+            if (ms.getKeyProperties().length > 0) {
                 builder.keyProperty(ms.getKeyProperties()[0]);
             }
         }
@@ -77,7 +77,7 @@ public class PageInterceptor implements Interceptor {
      * 复制BoundSql对象
      */
     private BoundSql copyFromBoundSql(MappedStatement ms, BoundSql boundSql, String sql) {
-        BoundSql newBoundSql = new BoundSql(ms.getConfiguration(),sql, boundSql.getParameterMappings(), boundSql.getParameterObject());
+        BoundSql newBoundSql = new BoundSql(ms.getConfiguration(), sql, boundSql.getParameterMappings(), boundSql.getParameterObject());
         for (ParameterMapping mapping : boundSql.getParameterMappings()) {
             String prop = mapping.getProperty();
             if (boundSql.hasAdditionalParameter(prop)) {
