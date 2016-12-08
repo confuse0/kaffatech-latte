@@ -24,17 +24,17 @@ public class IdBean extends BaseBean {
 	/**
 	 * 创建时间
 	 */
-	private Date createTime;
+	private Date createTime = new Date();
 
 	/**
 	 * 修改时间
 	 */
-	private Date updateTime;
+	private Date updateTime = createTime;
 
 	/**
 	 * 删除标记(0:未删除;1:已删除)
 	 */
-	private BooleanType deleteFlag;
+	private BooleanType deleteFlag = BooleanType.NO;
 
 	public Long getId() {
 		return id;
