@@ -18,9 +18,9 @@ public class OracleDialect implements Dialect {
         sb.append("select ROWNUM RN, TEMP_PAGED_TABLE.* from (");
         sb.append(origSql);
         sb.append(") TEMP_PAGED_TABLE where ROWNUM <= ");
-        sb.append(start);
-        sb.append(") where RN > ");
         sb.append(end);
+        sb.append(") where RN > ");
+        sb.append(start);
 
         return sb.toString();
     }
