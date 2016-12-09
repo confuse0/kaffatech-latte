@@ -1,9 +1,7 @@
 
 package com.kaffatech.latte.commons.bean.model.paging;
 
-import com.kaffatech.latte.commons.bean.model.BaseBean;
 import com.kaffatech.latte.commons.bean.model.ExampleBean;
-import com.kaffatech.latte.commons.toolkit.base.PagingUtils;
 
 /**
  * @author zhen.ling
