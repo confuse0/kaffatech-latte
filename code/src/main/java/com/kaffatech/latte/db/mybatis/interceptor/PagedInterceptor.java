@@ -22,7 +22,7 @@ import java.util.Properties;
  * @author lingzhen on 16/12/8.
  */
 @Intercepts({@Signature(type=Executor.class,method="query",args={ MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class })})
-public class DialectInterceptor implements Interceptor {
+public class PagedInterceptor implements Interceptor {
 
     /**
      * 数据库方言
