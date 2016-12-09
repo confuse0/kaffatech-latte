@@ -2,13 +2,14 @@
 package com.kaffatech.latte.commons.bean.model.paging;
 
 import com.kaffatech.latte.commons.bean.model.BaseBean;
+import com.kaffatech.latte.commons.bean.model.ExampleBean;
 import com.kaffatech.latte.commons.toolkit.base.PagingUtils;
 
 /**
  * @author zhen.ling
  *
  */
-public class PagedParameter extends BaseBean {
+public class PagedParameter extends ExampleBean {
 
 	/**
 	 * 
@@ -22,6 +23,7 @@ public class PagedParameter extends BaseBean {
 
 	/**
 	 * 起始行号
+	 *
 	 */
 	private Integer start;
 

@@ -22,16 +22,6 @@ public class ExampleBean extends BaseBean {
 	 */
 	private String orderByClause;
 
-	/**
-	 * 起始行号
-	 */
-	private Integer start;
-
-	/**
-	 * 单页行数
-	 */
-	private Integer rows;
-
 	public Boolean getDistinct() {
 		return distinct;
 	}
@@ -48,19 +38,4 @@ public class ExampleBean extends BaseBean {
 		this.orderByClause = orderByClause;
 	}
 
-	public Integer getStart() {
-		return start;
-	}
-
-	public void setStart(Integer start) {
-		this.start = start;
-	}
-
-	public Integer getRows() {
-		return rows;
-	}
-
-	public void setRows(Integer rows) {
-		this.rows = rows;
-	}
 }
