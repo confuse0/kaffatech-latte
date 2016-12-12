@@ -1,5 +1,6 @@
 package com.kaffatech.latte.scheduling.tracker.impl;
 
+import com.kaffatech.latte.commons.toolkit.base.ArrayUtils;
 import com.kaffatech.latte.ctx.cc.ServerManager;
 import com.kaffatech.latte.ctx.cc.model.Cluster;
 import com.kaffatech.latte.ctx.cc.model.Server;
@@ -133,7 +134,7 @@ public class JobTrackerWatcher extends SerializationJob implements JobTrackerMan
             if (StringUtils.isEmpty(shardingGroup)) {
                 jobTracker.setShardingGroup(new ArrayList<String>());
             } else {
-                jobTracker.setShardingGroup(CollectionUtils.toList(shardingGroup.split(",")));
+                jobTracker.setShardingGroup(ArrayUtils.asList(shardingGroup.split(",")));
             }
 
             return jobTracker;

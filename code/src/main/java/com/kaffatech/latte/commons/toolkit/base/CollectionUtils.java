@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class CollectionUtils extends org.springframework.util.CollectionUtils {
+public class CollectionUtils extends org.apache.commons.collections.CollectionUtils {
 
 	public static int search(Object[] array, Object key) {
 		if (array == null || array.length <= 0) {
@@ -90,10 +90,6 @@ public class CollectionUtils extends org.springframework.util.CollectionUtils {
 		return sublist(list, start, list.size());
 	}
 
-	public static <T> List<T> toList(T... array) {
-		return arrayToList(array);
-	}
-
 	public static <T> List<T> toListFromMap(Map<?, T> map) {
 		if (map == null) {
 			return null;
@@ -104,11 +100,6 @@ public class CollectionUtils extends org.springframework.util.CollectionUtils {
 			list.add(each.getValue());
 		}
 		return list;
-	}
-
-	@SuppressWarnings("unchecked")
-	public static <T> List<T> asList(T... item) {
-		return Arrays.asList(item);
 	}
 
 	public static <T> List<T> shuffleList(List<T> list) {
