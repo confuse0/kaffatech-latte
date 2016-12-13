@@ -1,6 +1,8 @@
 package com.kaffatech.latte.db.mybatis.interceptor;
 
 import com.kaffatech.latte.commons.bean.model.paging.PagedParameter;
+import com.kaffatech.latte.commons.toolkit.base.StringUtils;
+import com.kaffatech.latte.ctx.base.SystemProperties;
 import com.kaffatech.latte.db.dialect.Dialect;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
@@ -39,7 +41,7 @@ public class PagedInterceptor implements Interceptor {
 
         if (parameterObject instanceof PagedParameter) {
             // 如果是分页查询生成分页SQL
-            PagedParameter pagedParameter = (PagedParameter) parameterObject;
+            PagedParameter pagedParameter = getPagedParameter((PagedParameter) parameterObject);
             String pagedSql = dialect.getPagedSql(origSql, pagedParameter.getPage(), pagedParameter.getRows());
 
             // 替换分页参数
@@ -49,6 +51,25 @@ public class PagedInterceptor implements Interceptor {
         }
 
         return invocation.proceed();
+    }
+
+    private PagedParameter getPagedParameter(PagedParameter pagedParameter) {
+        if (pagedParameter.getPage() == null) {
+            // 默认值为第一页
+            pagedParameter.setPage(1);
+        }
+
+        if (pagedParameter.getRows() == null) {
+            // 设置单页行数默认值
+            String defaultRows = SystemProperties.getProperty("defaultRows");
+            if (StringUtils.isEmpty(defaultRows)) {
+                pagedParameter.setRows(Integer.MAX_VALUE);
+            } else {
+                pagedParameter.setRows(Integer.parseInt(defaultRows));
+            }
+        }
+
+        return pagedParameter;
     }
 
     /**
