@@ -1,7 +1,6 @@
 
 package com.kaffatech.latte.commons.bean.converter;
 
-import com.kaffatech.latte.commons.bean.model.date.Time;
 import com.kaffatech.latte.commons.toolkit.base.DateUtils;
 import org.dozer.CustomConverter;
 
@@ -22,7 +21,7 @@ public class DateConverter implements CustomConverter {
 			if (sourceFieldValue instanceof String) {
 				// 字符转日期类型（秒）
 				obj = DateUtils.parseToDate((String) sourceFieldValue);
-			} else if (sourceFieldValue instanceof Time) {
+			} else if (sourceFieldValue instanceof Date) {
 				// 日期类型转字符（秒）
 				obj = DateUtils.format((Date) sourceFieldValue);
 			}
