@@ -260,13 +260,6 @@
             <version>${validation-api.version}</version>
         </dependency>
 
-        <!-- test -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
@@ -309,6 +302,14 @@
             <groupId>com.itextpdf</groupId>
             <artifactId>itext-asian</artifactId>
             <version>${itextpdf.asian.version}</version>
+        </dependency>
+
+        <!-- test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
