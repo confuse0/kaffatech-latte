@@ -36,6 +36,11 @@ public class IdBean extends BaseBean {
 	 */
 	private BooleanType deleteFlag = BooleanType.NO;
 
+	/**
+	 * 备注说明
+	 */
+	private String descr;
+
 	public Long getId() {
 		return id;
 	}
@@ -66,5 +71,13 @@ public class IdBean extends BaseBean {
 
 	public void setDeleteFlag(BooleanType deleteFlag) {
 		this.deleteFlag = deleteFlag;
+	}
+
+	public String getDescr() {
+		return descr;
+	}
+
+	public void setDescr(String descr) {
+		this.descr = descr;
 	}
 }
