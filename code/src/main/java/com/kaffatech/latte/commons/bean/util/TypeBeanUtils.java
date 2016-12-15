@@ -14,7 +14,7 @@ import com.kaffatech.latte.commons.toolkit.base.StringUtils;
  */
 public class TypeBeanUtils {
 
-	public static <T> T getType(Class<? extends TypeBean> clazz, String code) {
+	public static <T> T getType(Class<T> clazz, String code) {
 		T obj = null;
 		List enumList = EnumUtils.getEnumList((Class<? extends Enum>) clazz);
 		for (Object each : enumList) {
