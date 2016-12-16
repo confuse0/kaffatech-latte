@@ -24,12 +24,12 @@ public class IdBean extends BaseBean {
 	/**
 	 * 创建时间
 	 */
-	private Date createTime = new Date();
+	private Date createTime;
 
 	/**
 	 * 修改时间
 	 */
-	private Date updateTime = createTime;
+	private Date updateTime;
 
 	/**
 	 * 删除标记(0:未删除;1:已删除)
