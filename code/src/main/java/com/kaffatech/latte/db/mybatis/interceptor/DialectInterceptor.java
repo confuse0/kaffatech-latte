@@ -1,6 +1,7 @@
 package com.kaffatech.latte.db.mybatis.interceptor;
 
 import com.kaffatech.latte.commons.bean.model.paging.PagedParameter;
+import com.kaffatech.latte.commons.toolkit.base.CollectionUtils;
 import com.kaffatech.latte.commons.toolkit.base.StringUtils;
 import com.kaffatech.latte.ctx.base.SystemProperties;
 import com.kaffatech.latte.db.dialect.Dialect;
@@ -9,6 +10,7 @@ import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.MappedStatement.Builder;
 import org.apache.ibatis.mapping.ParameterMapping;
+import org.apache.ibatis.mapping.ResultMap;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
@@ -18,13 +20,15 @@ import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
+import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author lingzhen on 16/12/8.
  */
 @Intercepts({@Signature(type=Executor.class,method="query",args={ MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class })})
-public class PagedInterceptor implements Interceptor {
+public class DialectInterceptor implements Interceptor {
 
     /**
      * 数据库方言
@@ -39,7 +43,7 @@ public class PagedInterceptor implements Interceptor {
         String origSql = boundSql.getSql().trim();
         Object parameterObject = boundSql.getParameterObject();
 
-        if (parameterObject instanceof PagedParameter) {
+        if (isPagedSql(mappedStatement, parameterObject)) {
             // 如果是分页查询生成分页SQL
             PagedParameter pagedParameter = getPagedParameter((PagedParameter) parameterObject);
             String pagedSql = dialect.getPagedSql(origSql, pagedParameter.getPage(), pagedParameter.getRows());
@@ -51,6 +55,22 @@ public class PagedInterceptor implements Interceptor {
         }
 
         return invocation.proceed();
+    }
+
+    private boolean isPagedSql(MappedStatement mappedStatement, Object parameterObject) {
+        if (parameterObject instanceof PagedParameter) {
+            List<ResultMap> resultMaps = mappedStatement.getResultMaps();
+            if (!CollectionUtils.isEmpty(resultMaps) && resultMaps.size() > 0 && resultMaps.get(0) != null) {
+                ResultMap resultMap = resultMaps.get(0);
+                if (List.class.isAssignableFrom(resultMap.getType()) || Set.class.isAssignableFrom(resultMap.getType())) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        return false;
     }
 
     private PagedParameter getPagedParameter(PagedParameter pagedParameter) {
