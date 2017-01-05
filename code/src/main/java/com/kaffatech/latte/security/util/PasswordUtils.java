@@ -1,5 +1,6 @@
 package com.kaffatech.latte.security.util;
 
+import com.kaffatech.latte.commons.toolkit.base.math.RandomUtils;
 import com.kaffatech.latte.commons.toolkit.codec.Base64Utils;
 import com.kaffatech.latte.commons.toolkit.base.math.ByteUtils;
 import com.kaffatech.latte.commons.toolkit.base.StringUtils;
@@ -19,7 +20,7 @@ public class PasswordUtils {
      * @return
      */
     public static String generateSalt() {
-        return DesUtils.getKey();
+        return Base64Utils.encode(ByteUtils.longToBytes(RandomUtils.nextLong()));
     }
 
     /**
