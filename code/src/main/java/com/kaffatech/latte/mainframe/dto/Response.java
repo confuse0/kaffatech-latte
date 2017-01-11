@@ -25,6 +25,11 @@ public class Response extends BaseBean {
 	private String message;
 
 	/**
+	 * 扩展信息
+	 */
+	private String extendInfo;
+
+	/**
 	 * @return the code
 	 */
 	public String getCode() {
@@ -54,4 +59,11 @@ public class Response extends BaseBean {
 		this.message = message;
 	}
 
+	public String getExtendInfo() {
+		return extendInfo;
+	}
+
+	public void setExtendInfo(String extendInfo) {
+		this.extendInfo = extendInfo;
+	}
 }
