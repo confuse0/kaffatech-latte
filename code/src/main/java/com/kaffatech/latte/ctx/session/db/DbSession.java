@@ -1,5 +1,6 @@
 package com.kaffatech.latte.ctx.session.db;
 
+import com.kaffatech.latte.commons.bean.model.BaseBean;
 import org.springframework.session.ExpiringSession;
 
 import java.util.Map;
@@ -9,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author lingzhen on 16/10/11.
  */
-public class DbSession implements ExpiringSession {
+public class DbSession extends BaseBean implements ExpiringSession {
 
     /**
      * SESSION_ID
@@ -34,12 +35,7 @@ public class DbSession implements ExpiringSession {
     /**
      * SESSION数据
      */
-    private Map<String, Object> data = new ConcurrentHashMap<String, Object>();
-
-    DbSession() {
-        this.creationTime = System.currentTimeMillis();
-        this.lastAccessedTime = this.creationTime;
-    }
+    private Map<String, Object> sessionData = new ConcurrentHashMap<String, Object>();
 
     @Override
     public long getCreationTime() {
@@ -86,29 +82,29 @@ public class DbSession implements ExpiringSession {
 
     @Override
     public <T> T getAttribute(String name) {
-        return (T) data.get(name);
+        return (T) sessionData.get(name);
     }
 
     @Override
     public Set<String> getAttributeNames() {
-        return data.keySet();
+        return sessionData.keySet();
     }
 
     @Override
     public void setAttribute(String name, Object value) {
-        data.put(name, value);
+        sessionData.put(name, value);
     }
 
     @Override
     public void removeAttribute(String name) {
-        data.remove(name);
+        sessionData.remove(name);
     }
 
-    public Map<String, Object> getData() {
-        return data;
+    public Map<String, Object> getSessionData() {
+        return sessionData;
     }
 
-    public void setData(Map<String, Object> data) {
-        this.data = data;
+    public void setSessionData(Map<String, Object> data) {
+        this.sessionData = data;
     }
 }
