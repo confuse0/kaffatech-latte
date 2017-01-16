@@ -136,7 +136,7 @@ public class FtpUtils {
                 }
                 result = true;
             } else {
-                Log.ERROR_LOGGER.error("连接失败");
+                Log.ERROR_LOGGER.error("上传下载连接失败");
             }
         } catch (IOException e) {
             Log.ERROR_LOGGER.error("FTP文件下载异常:" + e.getMessage(), e);
