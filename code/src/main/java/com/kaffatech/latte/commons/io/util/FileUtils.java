@@ -1,12 +1,10 @@
 package com.kaffatech.latte.commons.io.util;
 
-import com.kaffatech.latte.commons.io.model.exception.IoRuntimeException;
 import com.kaffatech.latte.commons.log.Log;
 import com.kaffatech.latte.commons.toolkit.base.StringUtils;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 public abstract class FileUtils extends org.apache.commons.io.FileUtils {
 
