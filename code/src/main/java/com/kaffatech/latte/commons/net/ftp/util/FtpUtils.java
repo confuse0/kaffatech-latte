@@ -19,6 +19,8 @@ public class FtpUtils {
 
     private static final String DEF_ENCODING = getEncoding();
 
+    private static final int DEF_PORT = 21;
+
     public static boolean uploadFile(String url, String username, String password, String remoteFolder, String localPath) {
         return uploadFile(url, DEF_ENCODING, username, password, remoteFolder, localPath);
     }
@@ -28,7 +30,7 @@ public class FtpUtils {
     }
 
     public static boolean uploadFile(String url, String encoding, String username, String password, String remoteFolder, String localPath) {
-        return uploadFile(url, 21, encoding, username, password, remoteFolder, localPath);
+        return uploadFile(url, DEF_PORT, encoding, username, password, remoteFolder, localPath);
     }
 
     /**
@@ -98,7 +100,7 @@ public class FtpUtils {
     }
 
     public static boolean downloadFile(String url, String encoding, String username, String password, String remotePath, String localFolder) {
-        return downloadFile(url, 21, encoding, username, password, remotePath, localFolder);
+        return downloadFile(url, DEF_PORT, encoding, username, password, remotePath, localFolder);
     }
 
     /**
