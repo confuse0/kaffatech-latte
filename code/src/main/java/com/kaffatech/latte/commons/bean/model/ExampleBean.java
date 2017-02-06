@@ -18,6 +18,11 @@ public class ExampleBean extends BaseBean {
 	private String distinctClause;
 
 	/**
+	 * GroupBy子句
+	 */
+	private String groupByClause;
+
+	/**
 	 * OrderBy子句
 	 */
 	private String orderByClause;
@@ -28,6 +33,14 @@ public class ExampleBean extends BaseBean {
 
 	public void setDistinctClause(String distinctClause) {
 		this.distinctClause = distinctClause;
+	}
+
+	public String getGroupByClause() {
+		return groupByClause;
+	}
+
+	public void setGroupByClause(String groupByClause) {
+		this.groupByClause = groupByClause;
 	}
 
 	public String getOrderByClause() {
