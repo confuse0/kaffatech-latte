@@ -13,21 +13,21 @@ public class ExampleBean extends BaseBean {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 是否DISTINCT
+	 * Distinct子句
 	 */
-	private Boolean distinct;
+	private String distinctClause;
 
 	/**
 	 * OrderBy子句
 	 */
 	private String orderByClause;
 
-	public Boolean getDistinct() {
-		return distinct;
+	public String getDistinctClause() {
+		return distinctClause;
 	}
 
-	public void setDistinct(Boolean distinct) {
-		this.distinct = distinct;
+	public void setDistinctClause(String distinctClause) {
+		this.distinctClause = distinctClause;
 	}
 
 	public String getOrderByClause() {
