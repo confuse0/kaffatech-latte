@@ -43,7 +43,7 @@ public abstract class FileUtils extends org.apache.commons.io.FileUtils {
      */
     public static String getFileName(String path) {
         int idx = path.lastIndexOf(StringUtils.FILE_SEP);
-        return path.substring(idx);
+        return path.substring(idx + 1);
     }
 
     public static void close(Closeable closeable) {
