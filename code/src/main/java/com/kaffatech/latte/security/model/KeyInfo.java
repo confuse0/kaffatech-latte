@@ -12,7 +12,7 @@ public class KeyInfo extends BaseBean {
     /**
      * 名字
      */
-    private String name;
+    private String keyName;
 
     /**
      * KEY值
@@ -24,12 +24,12 @@ public class KeyInfo extends BaseBean {
      */
     private String algorithms;
 
-    public String getName() {
-        return name;
+    public String getKeyName() {
+        return keyName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setKeyName(String keyName) {
+        this.keyName = keyName;
     }
 
     public String getKeyValue() {
