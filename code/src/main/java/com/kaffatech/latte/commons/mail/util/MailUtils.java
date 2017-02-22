@@ -1,4 +1,4 @@
-package com.kaffatech.latte.commons.mail.utils;
+package com.kaffatech.latte.commons.mail.util;
 
 import com.kaffatech.latte.commons.toolkit.base.StringUtils;
 import com.kaffatech.latte.ctx.base.SystemProperties;
@@ -67,5 +67,5 @@ public class MailUtils {
             e.printStackTrace();
         }
     }
-    
+
 }
