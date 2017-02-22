@@ -1,9 +1,11 @@
 package com.kaffatech.latte.security;
 
+import com.kaffatech.latte.security.model.KeyInfo;
+
 /**
  * @author lingzhen on 16/11/3.
  */
 public interface KeyGenerator {
 
-    String getKey(String name);
+    KeyInfo getKey(String name);
 }

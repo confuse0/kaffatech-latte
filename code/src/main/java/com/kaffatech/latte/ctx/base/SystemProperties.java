@@ -1,7 +1,8 @@
 
 package com.kaffatech.latte.ctx.base;
 
-import com.kaffatech.latte.commons.toolkit.base.BooleanUtils;
+import com.kaffatech.latte.security.KeyGenerator;
+import com.kaffatech.latte.security.model.KeyInfo;
 import com.kaffatech.latte.security.util.DesedeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
@@ -23,6 +24,11 @@ public class SystemProperties extends PropertyPlaceholderConfigurer {
 
 	private static Properties properties = new Properties();
 
+	/**
+	 * 注入KEY产生器
+	 */
+	private KeyGenerator keyGenerator;
+
 	@SuppressWarnings("rawtypes")
 	public void init() throws IOException {
 		properties = mergeProperties();
@@ -32,7 +38,7 @@ public class SystemProperties extends PropertyPlaceholderConfigurer {
 		super.loadProperties(props);
 
 		// 设置KeyOfKey
-		String keyOfKey = "3MSw/tnQzu9RRrODZJhbrrB/WHl5+Kei";
+		String keyOfKey = generateKeyOfKey();
 		props.setProperty(KEY_OF_KEY_NAME, keyOfKey);
 		System.setProperty(KEY_OF_KEY_NAME, keyOfKey);
 
@@ -42,13 +48,36 @@ public class SystemProperties extends PropertyPlaceholderConfigurer {
 			Map.Entry entry = (Map.Entry) it.next();
 			String key = entry.getKey().toString();
 			String value = entry.getValue().toString();
-			if (BooleanUtils.toBoolean(properties.getProperty(key + DECRYPT_POSTFIX))) {
+			String decryptName = properties.getProperty(key + DECRYPT_POSTFIX);
+			if (!StringUtils.isEmpty(decryptName)) {
 				// 需要解密
-				value = DesedeUtils.decrypt(System.getProperty(KEY_OF_KEY_NAME), value);
-				props.setProperty(key, value);
+				String customKeyOfKey = keyOfKey;
+				if (keyGenerator != null) {
+					KeyInfo keyInfo = keyGenerator.getKey(decryptName);
+					if (keyInfo != null) {
+						customKeyOfKey = keyInfo.getKey();
+					}
+				}
+
+				if (!StringUtils.isEmpty(customKeyOfKey)) {
+					value = DesedeUtils.decrypt(customKeyOfKey, value);
+				}
 			}
+			props.setProperty(key, value);
 			System.setProperty(key, value);
 		}
+	}
+
+	private String generateKeyOfKey() {
+		// 默认的KeyOfKey
+		String keyOfKey = "3MSw/tnQzu9RRrODZJhbrrB/WHl5+Kei";
+		if (keyGenerator != null) {
+			KeyInfo keyInfo = keyGenerator.getKey(KEY_OF_KEY_NAME);
+			if (keyInfo != null) {
+				keyOfKey = keyInfo.getKey();
+			}
+		}
+		return keyOfKey;
 	}
 
 	public static String getKeyOfKey() {
@@ -93,5 +122,9 @@ public class SystemProperties extends PropertyPlaceholderConfigurer {
 			return true;
 		}
 		return false;
+	}
+
+	public void setKeyGenerator(KeyGenerator keyGenerator) {
+		this.keyGenerator = keyGenerator;
 	}
 }
