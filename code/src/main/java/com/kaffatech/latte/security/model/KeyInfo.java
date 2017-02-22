@@ -15,9 +15,9 @@ public class KeyInfo extends BaseBean {
     private String name;
 
     /**
-     * KEY
+     * KEY值
      */
-    private String key;
+    private String keyValue;
 
     /**
      * 算法
@@ -32,12 +32,12 @@ public class KeyInfo extends BaseBean {
         this.name = name;
     }
 
-    public String getKey() {
-        return key;
+    public String getKeyValue() {
+        return keyValue;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setKeyValue(String keyValue) {
+        this.keyValue = keyValue;
     }
 
     public String getAlgorithms() {

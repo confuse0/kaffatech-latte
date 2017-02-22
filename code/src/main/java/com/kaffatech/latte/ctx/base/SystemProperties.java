@@ -55,7 +55,7 @@ public class SystemProperties extends PropertyPlaceholderConfigurer {
 				if (keyGenerator != null) {
 					KeyInfo keyInfo = keyGenerator.getKey(decryptName);
 					if (keyInfo != null) {
-						customKeyOfKey = keyInfo.getKey();
+						customKeyOfKey = keyInfo.getKeyValue();
 					}
 				}
 
@@ -74,7 +74,7 @@ public class SystemProperties extends PropertyPlaceholderConfigurer {
 		if (keyGenerator != null) {
 			KeyInfo keyInfo = keyGenerator.getKey(KEY_OF_KEY_NAME);
 			if (keyInfo != null) {
-				keyOfKey = keyInfo.getKey();
+				keyOfKey = keyInfo.getKeyValue();
 			}
 		}
 		return keyOfKey;
