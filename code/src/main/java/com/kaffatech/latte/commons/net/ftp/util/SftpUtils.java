@@ -4,6 +4,7 @@ import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
+import com.kaffatech.latte.commons.io.model.exception.IoRuntimeException;
 import com.kaffatech.latte.commons.net.ftp.SftpClient;
 
 import java.util.Properties;
@@ -28,20 +29,18 @@ public class SftpUtils {
         try {
             JSch jsch = new JSch();
             sshSession = jsch.getSession(username, host, port);
-            System.out.println("Session created.");
             sshSession.setPassword(password);
+
             Properties sshConfig = new Properties();
             sshConfig.put("StrictHostKeyChecking", "no");
             sshSession.setConfig(sshConfig);
             sshSession.connect();
-            System.out.println("Session connected.");
-            System.out.println("Opening Channel.");
+
             Channel channel = sshSession.openChannel("sftp");
             channel.connect();
             sftp = (ChannelSftp) channel;
-            System.out.println("Connected to " + host + ".");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new IoRuntimeException(e);
         }
         return new SftpClient(sshSession, sftp);
     }
