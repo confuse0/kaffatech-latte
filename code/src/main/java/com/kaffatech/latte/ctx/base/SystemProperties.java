@@ -29,11 +29,6 @@ public class SystemProperties extends PropertyPlaceholderConfigurer {
 	 */
 	private KeyGenerator keyGenerator;
 
-	@SuppressWarnings("rawtypes")
-	public void init() throws IOException {
-		properties = mergeProperties();
-	}
-
 	protected void loadProperties(Properties props) throws IOException {
 		super.loadProperties(props);
 
@@ -43,12 +38,12 @@ public class SystemProperties extends PropertyPlaceholderConfigurer {
 		System.setProperty(KEY_OF_KEY_NAME, keyOfKey);
 
 		// 同步一份到系统变量中去
-		Iterator it = properties.entrySet().iterator();
+		Iterator it = props.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry entry = (Map.Entry) it.next();
 			String key = entry.getKey().toString();
 			String value = entry.getValue().toString();
-			String decryptName = properties.getProperty(key + DECRYPT_POSTFIX);
+			String decryptName = props.getProperty(key + DECRYPT_POSTFIX);
 			if (!StringUtils.isEmpty(decryptName)) {
 				// 需要解密
 				String customKeyOfKey = keyOfKey;
