@@ -1,6 +1,8 @@
 package com.kaffatech.latte.commons.sms;
 
 import com.kaffatech.latte.cache.Cache;
+import com.kaffatech.latte.commons.toolkit.base.BooleanUtils;
+import com.kaffatech.latte.ctx.base.SystemProperties;
 import com.kaffatech.latte.mainframe.model.type.BaseResultCode;
 import com.kaffatech.latte.mainframe.model.exception.BizException;
 import com.kaffatech.latte.commons.log.Digest;
@@ -26,8 +28,9 @@ public abstract class BaseSmsService implements SmsService {
         long startTime = System.currentTimeMillis();
         SmsResult res = null;
         try {
-            validate(req.getMobile());
-            //validate(SessionContextHolder.getSession().getId());
+            if (BooleanUtils.toBoolean(SystemProperties.getProperty("smsCheck"))) {
+                validate(req.getMobile());
+            }
 
             res = send(req);
         } finally {

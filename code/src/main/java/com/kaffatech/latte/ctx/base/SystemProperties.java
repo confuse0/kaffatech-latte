@@ -61,6 +61,8 @@ public class SystemProperties extends PropertyPlaceholderConfigurer {
 			props.setProperty(key, value);
 			System.setProperty(key, value);
 		}
+
+		properties = props;
 	}
 
 	private String generateKeyOfKey() {
