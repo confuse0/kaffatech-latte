@@ -62,7 +62,8 @@ public class DialectInterceptor implements Interceptor {
             List<ResultMap> resultMaps = mappedStatement.getResultMaps();
             if (!CollectionUtils.isEmpty(resultMaps) && resultMaps.size() > 0 && resultMaps.get(0) != null) {
                 ResultMap resultMap = resultMaps.get(0);
-                if (List.class.isAssignableFrom(resultMap.getType()) || Set.class.isAssignableFrom(resultMap.getType())) {
+                if (!Integer.class.equals(resultMap.getType()) && !Long.class.equals(resultMap.getType()) && !Short.class.equals(resultMap.getType()) && !Byte.class.equals(resultMap.getType())) {
+                    // 不是求COUNT的SQL
                     return true;
                 }
             }
