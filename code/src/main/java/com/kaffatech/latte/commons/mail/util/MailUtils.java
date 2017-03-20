@@ -1,5 +1,6 @@
 package com.kaffatech.latte.commons.mail.util;
 
+import com.kaffatech.latte.commons.mail.model.exception.EmailRuntimeException;
 import com.kaffatech.latte.commons.toolkit.base.StringUtils;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
@@ -44,7 +45,7 @@ public class MailUtils {
 
             email.send();
         } catch (EmailException e) {
-            e.printStackTrace();
+            throw new EmailRuntimeException(e);
         }
     }
 
@@ -99,9 +100,9 @@ public class MailUtils {
 
             email.send();
         } catch (EmailException e) {
-            e.printStackTrace();
+            throw new EmailRuntimeException(e);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            throw new EmailRuntimeException(e);
         }
     }
 
