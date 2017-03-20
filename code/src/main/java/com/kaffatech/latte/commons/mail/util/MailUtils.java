@@ -3,11 +3,9 @@ package com.kaffatech.latte.commons.mail.util;
 import com.kaffatech.latte.commons.mail.model.exception.EmailRuntimeException;
 import com.kaffatech.latte.commons.toolkit.base.StringUtils;
 import org.apache.commons.mail.EmailAttachment;
-import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.MultiPartEmail;
 
 import javax.mail.internet.MimeUtility;
-import java.io.UnsupportedEncodingException;
 
 /**
  * @author lingzhen on 17/2/10.
@@ -77,9 +75,7 @@ public class MailUtils {
             }
 
             email.send();
-        } catch (EmailException e) {
-            throw new EmailRuntimeException(e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (Exception e) {
             throw new EmailRuntimeException(e);
         }
     }
