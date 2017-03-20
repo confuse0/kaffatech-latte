@@ -50,7 +50,7 @@ public class MailUtils {
     }
 
     /**
-     * 发送邮件
+     * 发送带附件的邮件
      *
      * @param hostname   主机地址
      * @param from       发件箱
