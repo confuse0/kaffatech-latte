@@ -5,6 +5,10 @@ package com.kaffatech.latte.commons.io.model.exception;
  */
 public class IoRuntimeException extends RuntimeException {
 
+    public IoRuntimeException(String msg) {
+        super(msg);
+    }
+
     public IoRuntimeException(Exception e) {
         super(e);
     }

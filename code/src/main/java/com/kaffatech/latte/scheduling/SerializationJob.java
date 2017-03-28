@@ -20,9 +20,7 @@ public abstract class SerializationJob implements Runnable {
             try {
                 process();
             } catch (Throwable t) {
-                System.out.println(this.getClass());
-                System.out.println(t.getMessage());
-                System.out.println("Failed...");
+                LogUtils.error(Log.ERROR_LOGGER, t, "[" + this.getClass() + "] ERROR");
                 status = 2; // 错误
             } finally {
                 isRunning = false;

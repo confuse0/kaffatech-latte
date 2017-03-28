@@ -5,6 +5,10 @@ package com.kaffatech.latte.commons.mail.model.exception;
  */
 public class EmailRuntimeException extends RuntimeException {
 
+    public EmailRuntimeException(String msg) {
+        super(msg);
+    }
+
     public EmailRuntimeException(Exception e) {
         super(e);
     }

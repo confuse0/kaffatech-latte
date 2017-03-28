@@ -1,7 +1,7 @@
 package com.kaffatech.latte.commons.net.ftp.util;
 
+import com.kaffatech.latte.commons.io.model.exception.IoRuntimeException;
 import com.kaffatech.latte.commons.io.util.FileUtils;
-import com.kaffatech.latte.commons.log.Log;
 import com.kaffatech.latte.commons.toolkit.base.StringUtils;
 import com.kaffatech.latte.ctx.base.SystemProperties;
 import org.apache.commons.net.ftp.FTPClient;
@@ -68,10 +68,10 @@ public class FtpUtils {
                     result = client.storeFile(fileName, input);
                 }
             } else {
-                Log.ERROR_LOGGER.error("上传文件连接失败");
+                throw new IoRuntimeException("FTP文件上传连接失败");
             }
         } catch (IOException e) {
-            Log.ERROR_LOGGER.error("FTP文件上传异常:" + e.getMessage(), e);
+            throw new IoRuntimeException(e);
         } finally {
             close(input, client);
         }
@@ -136,10 +136,10 @@ public class FtpUtils {
                 }
                 result = true;
             } else {
-                Log.ERROR_LOGGER.error("上传下载连接失败");
+                throw new IoRuntimeException("FTP文件下载连接失败");
             }
         } catch (IOException e) {
-            Log.ERROR_LOGGER.error("FTP文件下载异常:" + e.getMessage(), e);
+            throw new IoRuntimeException(e);
         } finally {
             close(output, client);
         }
@@ -178,9 +178,6 @@ public class FtpUtils {
             ftpEncoding = "UTF-8";
         }
         return ftpEncoding;
-    }
-
-    public static void main(String[] args) {
     }
 
 }
