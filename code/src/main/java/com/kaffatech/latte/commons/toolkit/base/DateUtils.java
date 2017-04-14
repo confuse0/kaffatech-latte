@@ -41,6 +41,10 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         return second / 1000L;
     }
 
+    public static Date now() {
+        return new Date();
+    }
+
     public static Date parseToDate(String str) {
         return parseToDate(str, SECOND);
     }
