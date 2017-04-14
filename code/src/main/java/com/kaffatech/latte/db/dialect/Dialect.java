@@ -6,4 +6,8 @@ package com.kaffatech.latte.db.dialect;
 public interface Dialect {
 
     String getPagedSql(String origSql, int page, int rows);
+
+    long nextSequence(String seqName);
+
+    long currSequence(String seqName);
 }

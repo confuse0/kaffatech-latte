@@ -1,12 +1,18 @@
 package com.kaffatech.latte.db.dialect.oracle;
 
 import com.kaffatech.latte.commons.toolkit.base.PagingUtils;
+import com.kaffatech.latte.db.accessor.DbAccessor;
 import com.kaffatech.latte.db.dialect.Dialect;
+
+import javax.annotation.Resource;
 
 /**
  * @author lingzhen on 16/12/8.
  */
 public class OracleDialect implements Dialect {
+
+    @Resource
+    private DbAccessor dbAccessor;
 
     @Override
     public String getPagedSql(String origSql, int page, int rows) {
@@ -23,6 +29,20 @@ public class OracleDialect implements Dialect {
         sb.append(start);
 
         return sb.toString();
+    }
+
+    @Override
+    public long nextSequence(String seqName) {
+        String querySql = "select " + seqName + ".nextval from " + seqName;
+        long id = dbAccessor.queryForObject(querySql, Long.class);
+        return id;
+    }
+
+    @Override
+    public long currSequence(String seqName) {
+        String querySql = "select " + seqName + ".currval from " + seqName;
+        long id = dbAccessor.queryForObject(querySql, Long.class);
+        return id;
     }
 
     public static void main(String[] args) {
