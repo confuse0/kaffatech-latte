@@ -7,7 +7,7 @@ import com.kaffatech.latte.commons.bean.model.type.TypeBean;
  * @author zhen.ling
  *
  */
-public enum ServerStatus implements TypeBean {
+public enum ClusterStatus implements TypeBean {
 
 	RUNNING("00", "运行中"),
 	IN_SERVICE("01", "服务中"),
@@ -18,7 +18,7 @@ public enum ServerStatus implements TypeBean {
 
 	private String name;
 
-	ServerStatus(String code, String name) {
+	ClusterStatus(String code, String name) {
 		this.code = code;
 		this.name = name;
 	}

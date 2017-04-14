@@ -19,17 +19,12 @@ public class Server extends IdBean {
     /**
      * 服务器名称
      */
-    private String name;
+    private String serverName;
 
     /**
-     * 服务器组
+     * 服务器集群名称
      */
-    private String cluster;
-
-    /**
-     * 是不是主
-     */
-    private BooleanType isMaster;
+    private String clusterName;
 
     /**
      * 上一次访问时间
@@ -51,28 +46,20 @@ public class Server extends IdBean {
      */
     private Long ver;
 
-    public String getName() {
-        return name;
+    public String getServerName() {
+        return serverName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
     }
 
-    public String getCluster() {
-        return cluster;
+    public String getClusterName() {
+        return clusterName;
     }
 
-    public void setCluster(String cluster) {
-        this.cluster = cluster;
-    }
-
-    public BooleanType getIsMaster() {
-        return isMaster;
-    }
-
-    public void setIsMaster(BooleanType isMaster) {
-        this.isMaster = isMaster;
+    public void setClusterName(String clusterName) {
+        this.clusterName = clusterName;
     }
 
     public Date getLastAccessTime() {

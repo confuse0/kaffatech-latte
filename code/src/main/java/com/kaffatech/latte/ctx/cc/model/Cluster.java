@@ -1,6 +1,8 @@
 package com.kaffatech.latte.ctx.cc.model;
 
 import com.kaffatech.latte.commons.bean.model.IdBean;
+import com.kaffatech.latte.ctx.cc.model.type.ClusterStatus;
+import com.kaffatech.latte.ctx.cc.model.type.ServerStatus;
 
 import java.util.Date;
 import java.util.List;
@@ -19,12 +21,12 @@ public class Cluster extends IdBean {
     /**
      * 名称
      */
-    private String name;
+    private String clusterName;
 
     /**
-     * 主服务器名
+     * 主服务器
      */
-    private String master;
+    private Server master;
 
     /**
      * 分配时间
@@ -32,42 +34,29 @@ public class Cluster extends IdBean {
     private Date lastAllocateTime;
 
     /**
-     * 配置数据
+     * 服务器状况
      */
-    private Map<String, String> data;
-
-    /**
-     * 服务器列表
-     */
-    private List<Server> serverList;
+    private ClusterStatus status;
 
     /**
      * 服务器列表版本号
      */
     private Long ver;
 
-    public String getName() {
-        return name;
+    public String getClusterName() {
+        return clusterName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setClusterName(String clusterName) {
+        this.clusterName = clusterName;
     }
 
-    public String getMaster() {
+    public Server getMaster() {
         return master;
     }
 
-    public void setMaster(String master) {
+    public void setMaster(Server master) {
         this.master = master;
-    }
-
-    public Long getVer() {
-        return ver;
-    }
-
-    public void setVer(Long ver) {
-        this.ver = ver;
     }
 
     public Date getLastAllocateTime() {
@@ -78,19 +67,19 @@ public class Cluster extends IdBean {
         this.lastAllocateTime = lastAllocateTime;
     }
 
-    public List<Server> getServerList() {
-        return serverList;
+    public ClusterStatus getStatus() {
+        return status;
     }
 
-    public void setServerList(List<Server> serverList) {
-        this.serverList = serverList;
+    public void setStatus(ClusterStatus status) {
+        this.status = status;
     }
 
-    public Map<String, String> getData() {
-        return data;
+    public Long getVer() {
+        return ver;
     }
 
-    public void setData(Map<String, String> data) {
-        this.data = data;
+    public void setVer(Long ver) {
+        this.ver = ver;
     }
 }

@@ -1,18 +1,17 @@
 package com.kaffatech.latte.scheduling.tracker.impl;
 
+import com.kaffatech.latte.commons.net.util.IpAddressUtils;
 import com.kaffatech.latte.commons.toolkit.base.ArrayUtils;
-import com.kaffatech.latte.ctx.cc.ServerManager;
+import com.kaffatech.latte.commons.toolkit.base.StringUtils;
+import com.kaffatech.latte.ctx.cc.ClusterManager;
 import com.kaffatech.latte.ctx.cc.model.Cluster;
 import com.kaffatech.latte.ctx.cc.model.Server;
 import com.kaffatech.latte.ctx.cc.model.type.ServerStatus;
-import com.kaffatech.latte.db.accessor.DbAccessor;
 import com.kaffatech.latte.ctx.id.IdGenerator;
+import com.kaffatech.latte.db.accessor.DbAccessor;
 import com.kaffatech.latte.scheduling.SerializationJob;
 import com.kaffatech.latte.scheduling.tracker.JobTrackerManager;
 import com.kaffatech.latte.scheduling.tracker.dmo.JobTracker;
-import com.kaffatech.latte.commons.toolkit.base.CollectionUtils;
-import com.kaffatech.latte.commons.net.util.IpAddressUtils;
-import com.kaffatech.latte.commons.toolkit.base.StringUtils;
 import org.springframework.jdbc.core.RowMapper;
 
 import javax.annotation.Resource;
@@ -34,7 +33,7 @@ public class JobTrackerWatcher extends SerializationJob implements JobTrackerMan
     private IdGenerator idGenerator;
 
     @Resource
-    private ServerManager serverManager;
+    private ClusterManager clusterManager;
 
     private static final String CLUSTER_NAME = "jobTracker";
 
@@ -55,14 +54,11 @@ public class JobTrackerWatcher extends SerializationJob implements JobTrackerMan
     @Override
     public void process() {
         // 获取集群信息
-        Cluster cluster = serverManager.getCluster(CLUSTER_NAME);
-        if (StringUtils.equals(cluster.getMaster(), IpAddressUtils.getHostAddress())) {
+        Cluster cluster = null;
+        if (StringUtils.equals(cluster.getMaster().getServerName(), IpAddressUtils.getHostAddress())) {
             // 主服务器负责更新分片信息
             List<JobTracker> jobTrackerList = getJobTrackerList(cluster);
-            if (!CollectionUtils.isEmpty(cluster.getServerList()) && CollectionUtils.isEmpty(jobTrackerList)) {
-                // 如果对应版本没有数据则需要更新
-                upgrade(cluster);
-            }
+
         }
     }
 
@@ -88,9 +84,10 @@ public class JobTrackerWatcher extends SerializationJob implements JobTrackerMan
     }
 
     private List<JobTracker> allocateJobTrackerList(Cluster cluster) {
+        List<Server> clusterServerList = clusterManager.queryServerList();
         List<Server> serverList = new ArrayList<Server>();
 
-        for (Server server : cluster.getServerList()) {
+        for (Server server : clusterServerList) {
             if (ServerStatus.RUNNING.equals(server.getStatus())) {
                 serverList.add(server);
             }
@@ -110,7 +107,7 @@ public class JobTrackerWatcher extends SerializationJob implements JobTrackerMan
         }
 
         int idx = 0;
-        for (int i = serverList.size(); i < cluster.getServerList().size(); i++) {
+        for (int i = serverList.size(); i < clusterServerList.size(); i++) {
             // 差值重新分配
             jobTrackerList.get(idx).getShardingGroup().add(String.valueOf(i));
             idx++;

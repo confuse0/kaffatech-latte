@@ -1,10 +1,8 @@
 package com.kaffatech.latte.scheduling.tracker.impl;
 
-import com.kaffatech.latte.ctx.cc.ServerManager;
+import com.kaffatech.latte.ctx.cc.ClusterManager;
 import com.kaffatech.latte.ctx.cc.model.Cluster;
 import com.kaffatech.latte.ctx.cc.model.Server;
-import com.kaffatech.latte.db.accessor.DbAccessor;
-import com.kaffatech.latte.ctx.id.IdGenerator;
 import com.kaffatech.latte.scheduling.SerializationJob;
 import com.kaffatech.latte.scheduling.tracker.JobTrackerManager;
 import com.kaffatech.latte.scheduling.tracker.dmo.JobTracker;
@@ -21,17 +19,9 @@ import java.util.Map;
 public class JobTrackerManagerImpl extends SerializationJob implements JobTrackerManager {
 
     @Resource
-    private DbAccessor dbAccessor;
-
-    @Resource
-    private IdGenerator idGenerator;
-
-    @Resource
-    private ServerManager serverManager;
+    private ClusterManager clusterManager;
 
     private JobTrackerSharding jobTrackerSharding;
-
-    private static final String SERVER_GROUP = "jobTracker";
 
     @Override
     public String allocateShardingId(String name) {
@@ -41,7 +31,7 @@ public class JobTrackerManagerImpl extends SerializationJob implements JobTracke
     @Override
     public void process() {
         // 获取集群信息
-        Cluster cluster = serverManager.getCluster(SERVER_GROUP);
+        Cluster cluster = clusterManager.queryCluster();
         if (jobTrackerSharding == null) {
             // 第一次同步
             reallocate();
@@ -50,9 +40,9 @@ public class JobTrackerManagerImpl extends SerializationJob implements JobTracke
 
     private void reallocate() {
         JobTrackerSharding temp = new JobTrackerSharding();
-        Cluster cluster = serverManager.getCluster(SERVER_GROUP);
+        Cluster cluster = clusterManager.queryCluster();
                 temp.setVer(cluster.getVer());
-        List<Server> clusterServerList =  cluster.getServerList();
+        List<Server> clusterServerList =  clusterManager.queryServerList();
         Map<String, JobTracker> jobTrackerMap = new HashMap<String, JobTracker>();
         for (Server server : clusterServerList) {
             JobTracker tracker = new JobTracker();
@@ -66,7 +56,7 @@ public class JobTrackerManagerImpl extends SerializationJob implements JobTracke
 //        boolean needToUpdate = false;
 //        if (trackerCtrl.getShardingVer() <= 0L || (jobTrackerSharding != null && jobTrackerSharding.getJobTrackerCtrl().getVer() >= trackerCtrl.getVer())) {
 //            // 需要进行分片分配同步
-//            List<Server> serverList = serverManager.getServer(SERVER_GROUP);
+//            List<Server> serverList = clusterManager.getServer(SERVER_GROUP);
 //
 //            List<JobTracker> aliveList = new ArrayList<JobTracker>();
 //            for (Server each : serverList) {
