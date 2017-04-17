@@ -5,9 +5,15 @@ package com.kaffatech.latte.db.dialect;
  */
 public interface Dialect {
 
+    String name();
+
     String getPagedSql(String origSql, int page, int rows);
 
-    long nextSequence(String seqName);
+    boolean supportAutoIncrement();
 
-    long currSequence(String seqName);
+    boolean supportSequence();
+
+    String getNextSequenceSql(String seqName);
+
+    String getCurrSequenceSql(String seqName);
 }

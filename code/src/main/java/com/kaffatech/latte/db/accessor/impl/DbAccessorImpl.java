@@ -1,25 +1,20 @@
 package com.kaffatech.latte.db.accessor.impl;
 
-import com.kaffatech.latte.db.accessor.DbAccessor;
+import com.kaffatech.latte.commons.bean.model.type.BooleanType;
 import com.kaffatech.latte.commons.toolkit.base.ArrayUtils;
 import com.kaffatech.latte.commons.toolkit.base.DateUtils;
+import com.kaffatech.latte.commons.toolkit.uuid.UuidUtils;
+import com.kaffatech.latte.db.accessor.DbAccessor;
+import com.kaffatech.latte.db.dialect.Dialect;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
 import java.math.BigDecimal;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
+import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -28,7 +23,15 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DbAccessorImpl extends JdbcTemplate implements DbAccessor {
 
+    /**
+     * 列元数据
+     */
     private Map<String, Map<String, Integer>> colMetadata = new ConcurrentHashMap<String, Map<String, Integer>>();
+
+    /**
+     * 数据库方言
+     */
+    private Dialect dialect;
 
     public int getJdbcType(String tableName, String colName) {
         Map<String, Integer> md = colMetadata.get(tableName);
@@ -37,6 +40,38 @@ public class DbAccessorImpl extends JdbcTemplate implements DbAccessor {
             colMetadata.put(tableName, md);
         }
         return md.get(colName);
+    }
+
+    @Override
+    public long nextSequence(String seqName) {
+        if (dialect.supportSequence()) {
+            // 如果支持sequence
+            return queryForObject(dialect.getNextSequenceSql(seqName), Long.class);
+        } else if (dialect.supportAutoIncrement()) {
+            // 如果不支持sequence但支持自增ID,则先插入一条再查询该条
+            String uuid = UuidUtils.generate();
+            Date now = new Date();
+            String insertSql = "insert into " + seqName + " (SEQ_UUID, CREATE_TIME, UPDATE_TIME, DELETE_FLAG) values (?, ?, ?, ?)";
+            update(insertSql, uuid, now, now, BooleanType.NO.getCode());
+            String querySql = "select ID from " + seqName + " where SEQ_UUID = ?";
+            return queryForObject(querySql, new Object[]{uuid}, Long.class);
+        } else {
+            throw new UnsupportedOperationException(dialect.name() + " cannot support nextSequence!");
+        }
+    }
+
+    @Override
+    public long currSequence(String seqName) {
+        if (dialect.supportSequence()) {
+            // 如果支持sequence
+            return queryForObject(dialect.getCurrSequenceSql(seqName), Long.class);
+        } else if (dialect.supportAutoIncrement()) {
+            // 如果不支持sequence但支持自增ID,则直接查询最新的一条
+            String querySql = "select ID from " + seqName + " ORDER BY ID DESC LIMIT 1";
+            return queryForObject(querySql, Long.class);
+        } else {
+            throw new UnsupportedOperationException(dialect.name() + " cannot support currSequence!");
+        }
     }
 
     private Map<String, Integer> getTableColMetadata(String tableName) {
@@ -56,6 +91,7 @@ public class DbAccessorImpl extends JdbcTemplate implements DbAccessor {
         });
         return md;
     }
+
 
     public void insertStringToTable(String tableName, List<Map<String, String>> recList) {
         insertToTable(tableName, (List) recList);
@@ -229,4 +265,7 @@ public class DbAccessorImpl extends JdbcTemplate implements DbAccessor {
         return new Timestamp(utilDate.getTime());
     }
 
+    public void setDialect(Dialect dialect) {
+        this.dialect = dialect;
+    }
 }

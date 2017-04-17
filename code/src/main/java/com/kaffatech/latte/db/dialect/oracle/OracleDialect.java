@@ -15,6 +15,11 @@ public class OracleDialect implements Dialect {
     private DbAccessor dbAccessor;
 
     @Override
+    public String name() {
+        return "OracleDialect";
+    }
+
+    @Override
     public String getPagedSql(String origSql, int page, int rows) {
         int start = PagingUtils.getOffset(page, rows);
         int end = start + rows;
@@ -32,17 +37,23 @@ public class OracleDialect implements Dialect {
     }
 
     @Override
-    public long nextSequence(String seqName) {
-        String querySql = "select " + seqName + ".nextval from " + seqName;
-        long id = dbAccessor.queryForObject(querySql, Long.class);
-        return id;
+    public boolean supportAutoIncrement() {
+        return false;
     }
 
     @Override
-    public long currSequence(String seqName) {
-        String querySql = "select " + seqName + ".currval from " + seqName;
-        long id = dbAccessor.queryForObject(querySql, Long.class);
-        return id;
+    public boolean supportSequence() {
+        return true;
+    }
+
+    @Override
+    public String getNextSequenceSql(String seqName) {
+        return "select " + seqName + ".nextval from " + seqName;
+    }
+
+    @Override
+    public String getCurrSequenceSql(String seqName) {
+        return "select " + seqName + ".currval from " + seqName;
     }
 
     public static void main(String[] args) {

@@ -1,13 +1,11 @@
 package com.kaffatech.latte.db.dialect.mysql;
 
-import com.kaffatech.latte.commons.bean.model.type.BooleanType;
 import com.kaffatech.latte.commons.toolkit.base.PagingUtils;
-import com.kaffatech.latte.commons.toolkit.uuid.UuidUtils;
 import com.kaffatech.latte.db.accessor.DbAccessor;
 import com.kaffatech.latte.db.dialect.Dialect;
 
 import javax.annotation.Resource;
-import java.util.Date;
+import javax.naming.OperationNotSupportedException;
 
 /**
  * @author lingzhen on 16/12/8.
@@ -16,6 +14,11 @@ public class MysqlDialect implements Dialect {
 
     @Resource
     private DbAccessor dbAccessor;
+
+    @Override
+    public String name() {
+        return "MysqlDialect";
+    }
 
     @Override
     public String getPagedSql(String origSql, int page, int rows) {
@@ -32,23 +35,24 @@ public class MysqlDialect implements Dialect {
     }
 
     @Override
-    public long nextSequence(String seqName) {
-        String uuid = UuidUtils.generate();
-        Date now = new Date();
-        String insertSql = "insert into " + seqName + " (SEQ_UUID, CREATE_TIME, UPDATE_TIME, DELETE_FLAG) values (?, ?, ?, ?)";
-        dbAccessor.update(insertSql, uuid, now, now, BooleanType.NO.getCode());
-        String querySql = "select ID from " + seqName + " where SEQ_UUID = ?";
-        long id = dbAccessor.queryForObject(querySql, new Object[]{uuid}, Long.class);
-        return id;
+    public boolean supportAutoIncrement() {
+        return true;
     }
 
     @Override
-    public long currSequence(String seqName) {
-        String querySql = "select ID from " + seqName + " ORDER BY ID DESC LIMIT 1";
-        long id = dbAccessor.queryForObject(querySql, Long.class);
-        return id;
+    public boolean supportSequence() {
+        return false;
     }
 
+    @Override
+    public String getNextSequenceSql(String seqName) {
+        throw new UnsupportedOperationException(name() + " cannot support getNextSequenceSql.");
+    }
+
+    @Override
+    public String getCurrSequenceSql(String seqName) {
+        throw new UnsupportedOperationException(name() + " cannot support getCurrSequenceSql.");
+    }
 
     public static void main(String[] args) {
         MysqlDialect d = new MysqlDialect();
