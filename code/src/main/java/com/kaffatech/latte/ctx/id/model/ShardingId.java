@@ -8,15 +8,28 @@ import com.kaffatech.latte.commons.bean.model.IdBean;
 public class ShardingId extends IdBean {
 
     /**
-     * 分片名称
+     * 业务集群名称
      */
-    private String name;
+    private String clusterName;
 
-    public String getName() {
-        return name;
+    /**
+     * ShardingId的服务器名称
+     */
+    private String serverName;
+
+    public String getClusterName() {
+        return clusterName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setClusterName(String clusterName) {
+        this.clusterName = clusterName;
+    }
+
+    public String getServerName() {
+        return serverName;
+    }
+
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
     }
 }
