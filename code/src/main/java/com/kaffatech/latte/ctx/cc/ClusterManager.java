@@ -32,5 +32,13 @@ public interface ClusterManager {
      */
     List<Server> queryServerList();
 
+    /**
+     * 查询服务器信息
+     *
+     * @param serverName
+     * @return
+     */
+    Server queryServer(String serverName);
+
 }
 

@@ -38,10 +38,14 @@ public class ConfigCenterManagerImpl implements ConfigCenterManager {
     }
 
     @Override
+    public Server queryServer(String clusterName, String serverName) {
+        return doQueryServer(clusterName, serverName);
+    }
+
+    @Override
     public List<Server> queryServerList(String clusterName) {
         return doQueryServerList(clusterName);
     }
-
 
     /**
      * 监控配置中心自己的集群
@@ -195,6 +199,12 @@ public class ConfigCenterManagerImpl implements ConfigCenterManager {
         Server master = dbAccessor.queryForObject(String.format(serverQuerySql, StringUtils.upperCase(clusterName)), new Object[]{cluster.getMaster().getId()}, new ServerRowMapper());
         cluster.setMaster(master);
         return cluster;
+    }
+
+    private Server doQueryServer(String clusterName, String serverName) {
+        String serverQuerySql = "select * from %s_SERVER where CLUSTER_NAME = ? AND SERVER_NAME = ?";
+        Server server = dbAccessor.queryForObject(String.format(serverQuerySql, StringUtils.upperCase(clusterName)), new Object[]{clusterName, serverName}, new ServerRowMapper());
+        return server;
     }
 
     private List<Server> doQueryServerList(String clusterName) {

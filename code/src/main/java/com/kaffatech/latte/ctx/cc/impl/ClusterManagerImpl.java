@@ -1,7 +1,7 @@
 package com.kaffatech.latte.ctx.cc.impl;
 
-import com.kaffatech.latte.ctx.cc.ConfigCenterManager;
 import com.kaffatech.latte.ctx.cc.ClusterManager;
+import com.kaffatech.latte.ctx.cc.ConfigCenterManager;
 import com.kaffatech.latte.ctx.cc.model.Cluster;
 import com.kaffatech.latte.ctx.cc.model.Server;
 
@@ -29,6 +29,11 @@ public class ClusterManagerImpl implements ClusterManager {
     @Override
     public Cluster queryCluster() {
         return configCenterManager.queryCluster(clusterName);
+    }
+
+    @Override
+    public Server queryServer(String serverName) {
+        return configCenterManager.queryServer(clusterName, serverName);
     }
 
     @Override

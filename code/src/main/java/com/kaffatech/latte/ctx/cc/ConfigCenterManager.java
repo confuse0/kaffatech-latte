@@ -14,6 +14,8 @@ public interface ConfigCenterManager {
 
     Cluster queryCluster(String clusterName);
 
+    Server queryServer(String clusterName, String serverName);
+
     List<Server> queryServerList(String clusterName);
 
     void monitorConfigCenter();
