@@ -20,9 +20,9 @@ public class DbShardingIdGetter implements ShardingIdGetter {
     @Resource
     private DbAccessor dbAccessor;
 
-    private static final String QUERY_SHARDING_ID_SQL = "SELECT * FROM SHARDING_ID WHERE CLUSTER_NAME = ? AND SERVER_NAME = ?";
+    private static final String QUERY_SHARDING_ID_SQL = "select * from SHARDING_ID where CLUSTER_NAME = ? and SERVER_NAME = ?";
 
-    private static final String INSERT_SHARDING_ID_SQL = "INSERT INTO SHARDING_ID (ID, CLUSTER_NAME, SERVER_NAME, CREATE_TIME, UPDATE_TIME, DELETE_FLAG) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_SHARDING_ID_SQL = "insert into SHARDING_ID (ID, CLUSTER_NAME, SERVER_NAME, CREATE_TIME, UPDATE_TIME, DELETE_FLAG) values (?, ?, ?, ?, ?, ?)";
 
     @Override
     public long getShardingId() {
@@ -48,10 +48,12 @@ public class DbShardingIdGetter implements ShardingIdGetter {
         shardingId.setServerName(IpAddressUtils.getHostAddress());
         long nextSequence = dbAccessor.nextSequence("SEQ_SHARDING_ID");
         shardingId.setId(nextSequence);
+        shardingId.setCreateTime(new Date());
+        shardingId.setUpdateTime(shardingId.getCreateTime());
+        shardingId.setDeleteFlag(BooleanType.NO);
 
         // 插入数据
-        Date now = new Date();
-        dbAccessor.update(INSERT_SHARDING_ID_SQL, shardingId.getId(), shardingId.getClusterName(), shardingId.getServerName(), now, now, BooleanType.NO.getCode());
+        dbAccessor.update(INSERT_SHARDING_ID_SQL, shardingId.getId(), shardingId.getClusterName(), shardingId.getServerName(), shardingId.getCreateTime(), shardingId.getUpdateTime(), shardingId.getDeleteFlag().getCode());
 
         return shardingId;
     }
