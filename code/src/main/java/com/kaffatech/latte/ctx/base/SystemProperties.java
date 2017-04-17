@@ -99,6 +99,10 @@ public class SystemProperties extends PropertyPlaceholderConfigurer {
 		return sid;
 	}
 
+	public static String getClusterName() {
+		return getProperty("clusterName");
+	}
+
 	public static String getDomain() {
 		return getProperty("domain");
 	}

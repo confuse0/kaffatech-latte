@@ -57,8 +57,8 @@ public class DbShardingIdGetter implements ShardingIdGetter {
     }
 
     private String getClusterName() {
-        String clusterName = SystemProperties.getProperty("clusterName");
-        return StringUtils.isEmpty(clusterName) ? "CORE" : clusterName;
+        String clusterName = SystemProperties.getClusterName();
+        return StringUtils.isEmpty(clusterName) ? "ANONYMITY" : clusterName;
 
     }
 }
