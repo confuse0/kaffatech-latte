@@ -174,9 +174,11 @@ public class ConfigCenterManagerImpl implements ConfigCenterManager {
         String sql = "update %s_SERVER set HEALTH = ?, LAST_ACCESS_TIME = ?, UPDATE_TIME = ? where SERVER_NAME = ?";
         int rowNo = dbAccessor.update(String.format(sql, StringUtils.upperCase(clusterName)), health, now, now, name);
         if (rowNo <= 0) {
-            // 不存在该服务器
+            // 不存在该服务器记录，则需要插入一条新的
+            long nextSequence = dbAccessor.nextSequence(String.format("SEQ_%s_SERVER", StringUtils.upperCase(clusterName)));
+
             String insertSql = "insert into %s_SERVER (ID, SERVER_NAME, CLUSTER_NAME, HEALTH, LAST_ACCESS_TIME, STATUS, CREATE_TIME, UPDATE_TIME, DELETE_FLAG) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            dbAccessor.update(String.format(insertSql, StringUtils.upperCase(clusterName)), 1L, name, clusterName, health, now, ServerStatus.RUNNING.getCode(), now, now, BooleanType.NO.getCode());
+            dbAccessor.update(String.format(insertSql, StringUtils.upperCase(clusterName)), nextSequence, name, clusterName, health, now, ServerStatus.RUNNING.getCode(), now, now, BooleanType.NO.getCode());
         }
         String querySql = "select * from %s_SERVER where CLUSTER_NAME = ? and SERVER_NAME = ?";
 
