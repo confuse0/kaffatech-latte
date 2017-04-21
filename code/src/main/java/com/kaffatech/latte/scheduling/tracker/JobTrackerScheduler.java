@@ -1,6 +1,6 @@
 package com.kaffatech.latte.scheduling.tracker;
 
-import com.kaffatech.latte.scheduling.tracker.dmo.JobTrackerContext;
+import com.kaffatech.latte.scheduling.tracker.model.JobTrackerContext;
 
 /**
  * @author lingzhen on 16/11/17.

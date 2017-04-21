@@ -1,4 +1,4 @@
-package com.kaffatech.latte.scheduling.tracker.dmo;
+package com.kaffatech.latte.scheduling.tracker.model;
 
 import com.kaffatech.latte.commons.bean.model.IdBean;
 import com.kaffatech.latte.scheduling.dmo.type.JobStatus;
@@ -16,19 +16,14 @@ public class Job extends IdBean {
     private String name;
 
     /**
-     * Job分组
+     * Job注册者名
      */
-    private String group;
-
-    /**
-     * Job执行者信息
-     */
-    private String runner;
+    private String registratorName;
 
     /**
      * Job表达式
      */
-    private String cronExpression;
+    private String expression;
 
     /**
      * Job状态
@@ -43,28 +38,20 @@ public class Job extends IdBean {
         this.name = name;
     }
 
-    public String getGroup() {
-        return group;
+    public String getRegistratorName() {
+        return registratorName;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setRegistratorName(String registratorName) {
+        this.registratorName = registratorName;
     }
 
-    public String getRunner() {
-        return runner;
+    public String getExpression() {
+        return expression;
     }
 
-    public void setRunner(String runner) {
-        this.runner = runner;
-    }
-
-    public String getCronExpression() {
-        return cronExpression;
-    }
-
-    public void setCronExpression(String cronExpression) {
-        this.cronExpression = cronExpression;
+    public void setExpression(String expression) {
+        this.expression = expression;
     }
 
     public JobStatus getStatus() {

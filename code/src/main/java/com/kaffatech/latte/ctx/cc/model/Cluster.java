@@ -19,14 +19,20 @@ public class Cluster extends IdBean {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 名称
+     * 健康
+     */
+    public static final String HEALTH = "H";
+
+
+    /**
+     * 集群名称
      */
     private String clusterName;
 
     /**
-     * 主服务器
+     * 主服务器名
      */
-    private Server master;
+    private String masterName;
 
     /**
      * 分配时间
@@ -41,7 +47,7 @@ public class Cluster extends IdBean {
     /**
      * 服务器列表版本号
      */
-    private Long ver;
+    private Long clusterVer;
 
     public String getClusterName() {
         return clusterName;
@@ -51,12 +57,12 @@ public class Cluster extends IdBean {
         this.clusterName = clusterName;
     }
 
-    public Server getMaster() {
-        return master;
+    public String getMasterName() {
+        return masterName;
     }
 
-    public void setMaster(Server master) {
-        this.master = master;
+    public void setMasterName(String masterName) {
+        this.masterName = masterName;
     }
 
     public Date getLastAllocateTime() {
@@ -75,11 +81,11 @@ public class Cluster extends IdBean {
         this.status = status;
     }
 
-    public Long getVer() {
-        return ver;
+    public Long getClusterVer() {
+        return clusterVer;
     }
 
-    public void setVer(Long ver) {
-        this.ver = ver;
+    public void setClusterVer(Long clusterVer) {
+        this.clusterVer = clusterVer;
     }
 }

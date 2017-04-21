@@ -1,5 +1,7 @@
 package com.kaffatech.latte.scheduling.tracker;
 
+import com.kaffatech.latte.scheduling.dmo.type.JobInstanceStatus;
+
 import java.util.Date;
 import java.util.Map;
 
@@ -8,7 +10,5 @@ import java.util.Map;
  */
 public interface JobTrackerService {
 
-    String submit(String name, String group, Map<?, ?> data, Date minRunnableTime);
-
-    void close(String instanceId);
+    void end(String instanceId, JobInstanceStatus status);
 }

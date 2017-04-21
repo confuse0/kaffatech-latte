@@ -1,7 +1,7 @@
 package com.kaffatech.latte.ctx.cc;
 
 import com.kaffatech.latte.ctx.cc.model.Cluster;
-import com.kaffatech.latte.ctx.cc.model.Server;
+import com.kaffatech.latte.ctx.cc.model.ServerSnapshot;
 
 import java.util.List;
 
@@ -14,9 +14,7 @@ public interface ConfigCenterManager {
 
     Cluster queryCluster(String clusterName);
 
-    Server queryServer(String clusterName, String serverName);
-
-    List<Server> queryServerList(String clusterName);
+    List<ServerSnapshot> queryServerSnapshotList(String clusterName, long clusterVer);
 
     void monitorConfigCenter();
 

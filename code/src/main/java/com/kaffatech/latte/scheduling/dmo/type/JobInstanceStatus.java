@@ -10,8 +10,9 @@ import com.kaffatech.latte.commons.bean.model.type.TypeBean;
 public enum JobInstanceStatus implements TypeBean {
 
 	PROCESSING("00", "处理中"),
-	CLOSED("10", "成功"),
-	PENDING("20", "失败");
+	SUCCESS("10", "成功"),
+	FAILED("20", "失败"),
+	PENDING("90", "未知挂起");
 
 	private String code;
 

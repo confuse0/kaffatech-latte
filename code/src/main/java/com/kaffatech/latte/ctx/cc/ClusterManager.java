@@ -1,7 +1,7 @@
 package com.kaffatech.latte.ctx.cc;
 
 import com.kaffatech.latte.ctx.cc.model.Cluster;
-import com.kaffatech.latte.ctx.cc.model.Server;
+import com.kaffatech.latte.ctx.cc.model.ServerSnapshot;
 
 import java.util.List;
 
@@ -13,32 +13,27 @@ public interface ClusterManager {
     /**
      * 发送心跳
      *
-     * @param name
+     * @param serverName
      * @param health
      */
-    void heartbeat(String name, String health);
+    void heartbeat(String clusterName, String serverName, String health);
 
     /**
      * 查询集群信息
      *
+     * @param clusterName
      * @return
      */
-    Cluster queryCluster();
+    Cluster queryCluster(String clusterName);
 
     /**
-     * 查询集群服务器列表
+     * 查询在服务中的集群服务器列表
      *
+     * @param clusterName
+     * @param clusterVer
      * @return
      */
-    List<Server> queryServerList();
-
-    /**
-     * 查询服务器信息
-     *
-     * @param serverName
-     * @return
-     */
-    Server queryServer(String serverName);
+    List<ServerSnapshot> queryServerSnapshotList(String clusterName, long clusterVer);
 
 }
 

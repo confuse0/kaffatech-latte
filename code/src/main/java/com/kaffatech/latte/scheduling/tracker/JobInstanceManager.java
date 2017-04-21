@@ -1,6 +1,6 @@
 package com.kaffatech.latte.scheduling.tracker;
 
-import com.kaffatech.latte.scheduling.tracker.dmo.JobInstance;
+import com.kaffatech.latte.scheduling.tracker.model.JobInstance;
 
 import java.util.List;
 

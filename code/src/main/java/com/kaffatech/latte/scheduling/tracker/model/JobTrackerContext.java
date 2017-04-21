@@ -1,42 +1,42 @@
-package com.kaffatech.latte.scheduling.tracker.dmo;
+package com.kaffatech.latte.scheduling.tracker.model;
 
 import com.kaffatech.latte.commons.bean.model.IdBean;
 
 import java.util.Date;
 
 /**
- * @author lingzhen on 16/11/15.
+ * @author lingzhen on 16/11/17.
  */
-public class JobTrackerCtrl extends IdBean {
+public class JobTrackerContext extends IdBean {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * JobTracker
+     * Job分片数量
      */
-    private String master;
+    private Integer maxShardingNo;
 
     /**
-     * 分配分片时间
+     * 最近分配的时间
      */
     private Date lastAllocateTime;
 
     /**
-     * 分片版本号
+     * 分片版本
      */
     private Long shardingVer;
 
     /**
-     * 版本号
+     * 集群版本号
      */
-    private Long ver;
+    private Long clusterVer;
 
-    public String getMaster() {
-        return master;
+    public Integer getMaxShardingNo() {
+        return maxShardingNo;
     }
 
-    public void setMaster(String master) {
-        this.master = master;
+    public void setMaxShardingNo(Integer maxShardingNo) {
+        this.maxShardingNo = maxShardingNo;
     }
 
     public Date getLastAllocateTime() {
@@ -55,11 +55,11 @@ public class JobTrackerCtrl extends IdBean {
         this.shardingVer = shardingVer;
     }
 
-    public Long getVer() {
-        return ver;
+    public Long getClusterVer() {
+        return clusterVer;
     }
 
-    public void setVer(Long ver) {
-        this.ver = ver;
+    public void setClusterVer(Long clusterVer) {
+        this.clusterVer = clusterVer;
     }
 }
