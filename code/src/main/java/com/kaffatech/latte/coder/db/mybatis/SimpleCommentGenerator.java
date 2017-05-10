@@ -12,6 +12,12 @@ import org.mybatis.generator.internal.DefaultCommentGenerator;
  */
 public class SimpleCommentGenerator extends DefaultCommentGenerator {
 
+    /**
+     * 生成模型注释
+     *
+     * @param topLevelClass     类
+     * @param introspectedTable 表
+     */
     public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         topLevelClass.addJavaDocLine("/*");
         topLevelClass.addJavaDocLine(" * 表：" + introspectedTable.getFullyQualifiedTable());
