@@ -17,6 +17,7 @@
         <spring-session.version>1.1.1.RELEASE</spring-session.version>
         <aspectj.version>1.7.4</aspectj.version>
         <mybatis.version>3.2.7</mybatis.version>
+        <mybatis-generator-core>1.3.5</mybatis-generator-core>
         <mybatis-spring.version>1.2.2</mybatis-spring.version>
         <jsch.version>0.1.51</jsch.version>
         <druid.version>1.0.26</druid.version>
@@ -46,7 +47,6 @@
         <bval.version>1.1.1</bval.version>
         <itextpdf.version>5.5.10</itextpdf.version>
         <itextpdf.asian.version>5.2.0</itextpdf.asian.version>
-
 
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -113,6 +113,11 @@
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
             <version>${mybatis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>${mybatis-generator-core}</version>
         </dependency>
 
         <dependency>
