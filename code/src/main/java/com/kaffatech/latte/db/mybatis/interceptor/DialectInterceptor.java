@@ -3,6 +3,7 @@ package com.kaffatech.latte.db.mybatis.interceptor;
 import com.kaffatech.latte.commons.bean.model.paging.PagedParameter;
 import com.kaffatech.latte.commons.toolkit.base.CollectionUtils;
 import com.kaffatech.latte.commons.toolkit.base.StringUtils;
+import com.kaffatech.latte.commons.toolkit.base.math.NumberUtils;
 import com.kaffatech.latte.ctx.base.SystemProperties;
 import com.kaffatech.latte.db.dialect.Dialect;
 import org.apache.ibatis.executor.Executor;
@@ -59,6 +60,11 @@ public class DialectInterceptor implements Interceptor {
 
     private boolean isPagedSql(MappedStatement mappedStatement, Object parameterObject) {
         if (parameterObject instanceof PagedParameter) {
+            if (!NumberUtils.isNatural(((PagedParameter) parameterObject).getRows())) {
+                // 一页行数如果为负数则不代表不需要分页
+                return false;
+            }
+            
             List<ResultMap> resultMaps = mappedStatement.getResultMaps();
             if (!CollectionUtils.isEmpty(resultMaps) && resultMaps.size() > 0 && resultMaps.get(0) != null) {
                 ResultMap resultMap = resultMaps.get(0);
