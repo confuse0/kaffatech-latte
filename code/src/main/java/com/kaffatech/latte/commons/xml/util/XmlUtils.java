@@ -34,7 +34,7 @@ public class XmlUtils {
      * @return 字符串
      */
 
-    private static String convertToXml(Object obj, String encoding) {
+    public static String convertToXml(Object obj, String encoding) {
         // 创建输出流
         StringWriter sw = new StringWriter();
 
