@@ -40,6 +40,7 @@ public class HttpUtils {
 
     public static final String DEFAULT_ENCODING = "utf8";
     public static final String JSON_CONTENT_TYPE = "application/json;chatset=utf8";
+    public static final String XML_CONTENT_TYPE = "application/xml";
 
     public static <T> T postForm(String url, List<NameValuePair> parameter,
                                  ResponseHandler<T> handler) {
@@ -172,6 +173,44 @@ public class HttpUtils {
             throw new IllegalStateException(e);
         } finally {
             put.releaseConnection();
+        }
+        return res;
+    }
+
+    public static <T> T postXml(String url, String xmlString, String encoding,
+                                ResponseHandler<T> handler) {
+        return postXml(url, xmlString, encoding, handler, null);
+    }
+
+    public static <T> T postXml(String url, String xmlString, ResponseHandler<T> handler) {
+        return postXml(url, xmlString, DEFAULT_ENCODING, handler, (Header[]) null);
+    }
+
+    public static <T> T postXml(String url, String xmlString, String encoding,
+                                ResponseHandler<T> handler, Header... header) {
+        T res = null;
+
+        HttpClient client = createClient(url);
+
+        HttpPost post = new HttpPost(url);
+        try {
+            if (header != null) {
+                for (Header each : header) {
+                    post.setHeader(each);
+                }
+            }
+
+            if (StringUtils.isNotEmpty(xmlString)) {
+                StringEntity s = new StringEntity(xmlString, encoding);
+                s.setContentType(XML_CONTENT_TYPE);
+                post.setEntity(s);
+            }
+
+            res = client.execute(post, handler);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            post.releaseConnection();
         }
         return res;
     }
