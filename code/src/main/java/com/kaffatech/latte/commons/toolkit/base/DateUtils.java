@@ -180,6 +180,20 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         return sdf.format(date);
     }
 
+    /**
+     * 用于比较当前时间是否在传入的开始和结束时间范围内
+     * @param beginDate 开始时间
+     * @param endDate 结束时间
+     * @return boolean
+     */
+    public static boolean compareTimeRange(Date beginDate, Date endDate) {
+        Date date = new Date();
+        if (date.getTime() >= beginDate.getTime() && date.getTime() <= endDate.getTime()) {
+            return true;
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         System.out
                 .println(convertFormat("2015-05-18", "yyyy-MM-dd", "yyyyMMdd"));
