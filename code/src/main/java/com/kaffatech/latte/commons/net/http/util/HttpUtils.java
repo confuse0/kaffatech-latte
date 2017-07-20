@@ -44,12 +44,23 @@ public class HttpUtils {
 
     public static <T> T postForm(String url, List<NameValuePair> parameter,
                                  ResponseHandler<T> handler) {
+        return postForm(url,parameter,handler,null);
+    }
+
+    public static <T> T postForm(String url, List<NameValuePair> parameter,
+                                 ResponseHandler<T> handler,Header... header) {
         T res = null;
 
         HttpClient client = createClient(url);
 
         HttpPost post = new HttpPost(url);
         try {
+            if (header != null) {
+                for (Header each : header) {
+                    post.setHeader(each);
+                }
+            }
+
             post.setEntity(new UrlEncodedFormEntity(parameter, HTTP.UTF_8));
 
             res = client.execute(post, handler);
